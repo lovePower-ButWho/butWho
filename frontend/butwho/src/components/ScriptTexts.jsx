@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import React from 'react'
+import create from 'zustand';
 
 const BottomContainer = styled.div`
     position: absolute;
@@ -13,19 +15,22 @@ const FlexContainer = styled.div`
 `;
 
 const Name = styled.div`
-    font-weight: bold;
-    font-size: 1.2em;
+    font-family: 'pretendard-regular';
+    font-size: 0.9em;
+    text-align: right;
+    padding: 5px 10px;
     color: #fff;
-    background-color: #A374DB;
+    background-color: #AFADFF;
     min-height: 1.2em;
-    width: 50%;
+    width: 40%;
 `
 
 const ScriptBox = styled.div`
+    font-family: 'pretendard-regular';
     display: flex;
     flex-direction: row;
     gap: 0.5em;
-    background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(100,9,121,0.8) 80%,rgba(100,9,121,0.5) 100%);
+    background: linear-gradient(0deg, rgba(255,248,248,0.7) 0%, rgba(255,248,248,0.7) 80%,rgba(255,255,255) 100%);
     padding: 0.5em;
 `
 
@@ -34,7 +39,8 @@ const Image = styled.img`
 `
 
 const ScriptText = styled.div`
-color: #fff;
+    color: #000;
+    font-size: 0.9em;
 `
 
 function Script({name, image, text}){
@@ -49,19 +55,20 @@ function Script({name, image, text}){
   );
 }
 
-
-function Narration({text}) {
-    return (
-        <BottomContainer>
-            <Script text={text} />
-        </BottomContainer>
-    );
-}
+const narrationIndex = create((set)=>({
+    index : 0,
+    increase(){
+        set((state)=> ({index: state.index + 1}))
+    },
+}))
 
 function Conversation({name, image, text}) {
+
+    const {index, increase} = narrationIndex();
+
     return (
-        <BottomContainer>
-            <Script name={name} image={image} text={text} />
+        <BottomContainer onClick={increase}>
+            <Script name={name} image={image} text={text[index]} />
         </BottomContainer>
     );
 }
@@ -76,4 +83,4 @@ function Choice({text:[...choices]}) {
     );
 }
 
-export {Narration, Conversation, Choice};
+export {Conversation, Choice};
