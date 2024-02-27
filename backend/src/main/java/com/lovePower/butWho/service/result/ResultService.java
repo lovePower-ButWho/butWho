@@ -7,8 +7,13 @@ import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ResultService {
@@ -41,9 +46,27 @@ public class ResultService {
     }
 
     //모든 공략 후 최종 결과 반환
-//    @Transactional
-//    public FinalResponse getFinalresult(String email){
-//        User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-//
-//    }
+    @Transactional
+    public List<FinalResponse> getFinalResult(String email){
+        User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        return user.getAllResults().stream().map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower())).collect(Collectors.toList());
+    }
+
+    //캐릭터별 공략여부
+    @Transactional
+    public List<Boolean> getPlayed(String email){
+        User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        List<Boolean> isplayed = new ArrayList<>();
+        List<Integer> targetIds = List.of(1,2,3);
+        for(Integer id:targetIds){
+            isplayed.add(resultRepository.existsByUserAndTargetId(user,id));
+        }
+        return isplayed;
+    }
+
+    @Transactional
+    public void clearResult(String email){
+        User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        user.clear();
+    }
 }

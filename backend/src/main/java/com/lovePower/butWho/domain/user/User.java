@@ -41,4 +41,9 @@ public class User {
     public void save(Result result){
         this.allResults.add(result);
     }
+
+    public void clear(){
+        //TODO 전부 다 클리어하지 않았을 경우 예외처리
+        allResults.clear();
+    }
 }

@@ -5,7 +5,11 @@ import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
 import com.lovePower.butWho.service.result.ResultService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class ResultController {
@@ -25,10 +29,21 @@ public class ResultController {
     }
 
     //해당 유저의 모든 공략 후 최종 결과 반환
-//    @GetMapping("/result/final")
-//    public FinalResponse allResults(@RequestHeader("Authorization") String email){
-//        resultService.getFinalresult(email);
-//
-//    }
+    @GetMapping("/result/final")
+    public List<FinalResponse> allResults(@RequestHeader("Authorization") String email){
+        return resultService.getFinalResult(email);
+    }
+
+    //해당 유저의 공략여부
+    @GetMapping("/play")
+    public List<Boolean> isPlayed(@RequestHeader("Authorization") String email){
+        return resultService.getPlayed(email);
+    }
+
+    //새로 플레이하고 싶은 경우 공략 결과 초기화하기
+    @PostMapping("/clear")
+    public void clearResult(@RequestHeader("Authorization") String email){
+        resultService.clearResult(email);
+    }
 
 }
