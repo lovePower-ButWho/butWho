@@ -36,7 +36,7 @@ public class ResultService {
                 .lovePower(request.getLovePower())
                 .user(user)
                 .build();
-        resultRepository.save(result);
+        user.save(result);
         return new ResultSaveResponse(mbti, request.getLovePower());
     }
 

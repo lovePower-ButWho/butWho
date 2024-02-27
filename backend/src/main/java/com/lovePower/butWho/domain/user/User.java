@@ -32,12 +32,13 @@ public class User {
         this.nickName = nickName;
     }
 
+    //각 유저가 결과를 가짐
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Result> allResults = new ArrayList<>();
     protected User(){}
 
     //결과저장
-//    public void play(Integer targetId,String mbti,Integer lovePower){
-//        allResults.add()
-//    }
+    public void save(Result result){
+        this.allResults.add(result);
+    }
 }
