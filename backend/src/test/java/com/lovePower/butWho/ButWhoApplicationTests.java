@@ -1,5 +1,4 @@
 package com.lovePower.butWho;
-
 import com.lovePower.butWho.domain.user.User;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
