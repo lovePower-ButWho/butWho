@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {Conversation, Choice} from '../components/ScriptTexts';
 import {createContext, useContext, useState} from 'react';
-import firstMeet from '../scripts/Script';
+import backgroundImg from '../assets/images/firstMeet.svg'
 
 const FlexContainer = styled.div`
     display: flex;
@@ -20,15 +20,16 @@ const PagesStyle = styled.div`
 
 const NarrationIndex = createContext(null);
 
-const Page = ()=> {
+const Page = ({script, image})=> {
     const { index, increaseIndex } = useContext(NarrationIndex);
     const [ choice, setChoice ] = useState(null);
-    console.log(choice);
+
+    //onClick 함수 새로 정의해서 type=narration일 때는 increaseIndex, choice===null일 때는 아무동작X, choice!=null이 아닐 때는 nextPage
     return (
-        <PagesStyle onClick={firstMeet[index].type === 'narration' ? increaseIndex : ()=>{}} image={backgroundImg}>
-            {firstMeet[index].type === 'narration' && <Conversation name='나' image={gojyoImage} text={firstMeet[index].text} />}
-            {(choice === null) && firstMeet[index].type === 'choice' && <Choice choice={setChoice} text={firstMeet[index].choices}/>}
-            {(choice !== null) && firstMeet[index].type === 'choice' && <Conversation text={choice} />}
+        <PagesStyle onClick={script[index].type === 'narration' ? increaseIndex : ()=>{}} image={image}>
+            {script[index].type === 'narration' && <Conversation name={'나'} image={gojyoImage} text={script[index].text} />}
+            {(choice === null) && script[index].type === 'choice' && <Choice choice={setChoice} text={script[index].choices}/>}
+            {(choice !== null) && script[index].type === 'choice' && <Conversation name='나' image={gojyoImage} text={choice} />}
         </PagesStyle>
     );
 }
@@ -47,19 +48,25 @@ const gojyoImage = "https://i.namu.wiki/i/ZUrEBCVWrZwEIQ6KjWWNvsfSGvVgntvCWGIpdZ
 //   },
 // }));
 
-function FirstMeetPage(script){
+function FirstMeetPage({script}){
     // const {index, setIndex} = narrationIndex();
 
     const [index, setIndex] = useState(0);
     const increaseIndex = ()=>{
-        if(index === firstMeet.length-1) return;
+        if(index === script.script.length-1) return;
         setIndex(index+1)
-    };
+    };  //useContext 쓰지 말고 위에 Page 컴포넌트에서 useState로 처리
 
+    // const nextPage = ()=>{
+    //     if(index === script.script.length-1) {
+    //       setPage(page+1)
+    //     }
+    //   };
+    
     return(
         <FlexContainer>
             <NarrationIndex.Provider value={{index, increaseIndex}}>
-                <Page/>
+                <Page script={script.script} image={script.backgroundImg}/>
             </NarrationIndex.Provider>
         </FlexContainer>
     )
