@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import React from 'react'
-import create from 'zustand';
 
 const BottomContainer = styled.div`
     position: absolute;
@@ -55,20 +54,12 @@ function Script({name, image, text}){
   );
 }
 
-const narrationIndex = create((set)=>({
-    index : 0,
-    increase(){
-        set((state)=> ({index: state.index + 1}))
-    },
-}))
 
 function Conversation({name, image, text}) {
-
-    const {index, increase} = narrationIndex();
-
+ 
     return (
-        <BottomContainer onClick={increase}>
-            <Script name={name} image={image} text={text[index]} />
+        <BottomContainer>
+            <Script name={name} image={image} text={text} />
         </BottomContainer>
     );
 }
