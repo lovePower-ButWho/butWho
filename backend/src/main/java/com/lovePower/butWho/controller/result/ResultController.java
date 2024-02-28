@@ -4,6 +4,7 @@ import com.lovePower.butWho.domain.result.Result;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
+import com.lovePower.butWho.dto.result.response.UserInfoResponse;
 import com.lovePower.butWho.service.result.ResultService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,4 +47,9 @@ public class ResultController {
         resultService.clearResult(email);
     }
 
+    //유저 정보 결과
+    @GetMapping("/myInfo")
+    public UserInfoResponse getUserInfo(@RequestHeader("Authorization") String email){
+        return resultService.getUserInfo(email);
+    }
 }

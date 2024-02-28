@@ -4,6 +4,7 @@ import com.lovePower.butWho.domain.result.ResultRepository;
 import com.lovePower.butWho.domain.user.User;
 import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
+import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
 import com.lovePower.butWho.service.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

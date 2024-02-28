@@ -7,18 +7,22 @@ import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
-import org.springframework.http.ResponseEntity;
+import com.lovePower.butWho.dto.result.response.UserInfoResponse;
+import jakarta.validation.constraints.Null;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ResultService {
     private final ResultRepository resultRepository;
     private final UserRepository userRepository;
+    private final List<Integer> targetIds = List.of(1,2,3);
 
     public ResultService(ResultRepository resultRepository, UserRepository userRepository){
         this.resultRepository = resultRepository;
@@ -49,7 +53,10 @@ public class ResultService {
     @Transactional
     public List<FinalResponse> getFinalResult(String email){
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-        return user.getAllResults().stream().map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower())).collect(Collectors.toList());
+        return user.getAllResults().stream()
+                .sorted(Comparator.comparingInt(Result::getTargetId))
+                .map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
+                .collect(Collectors.toList());
     }
 
     //캐릭터별 공략여부
@@ -57,7 +64,6 @@ public class ResultService {
     public List<Boolean> getPlayed(String email){
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
         List<Boolean> isplayed = new ArrayList<>();
-        List<Integer> targetIds = List.of(1,2,3);
         for(Integer id:targetIds){
             isplayed.add(resultRepository.existsByUserAndTargetId(user,id));
         }
@@ -67,6 +73,20 @@ public class ResultService {
     @Transactional
     public void clearResult(String email){
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-        user.clear();
+        user.clear();  //이 경우는 서비스 계층을 거치지 않는 편이 더 좋은가?
+    }
+
+    //회원정보
+    @Transactional
+    public UserInfoResponse getUserInfo(String email){
+        User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        List<FinalResponse> results = new ArrayList<>();
+        for (Integer id:targetIds){
+            results.add(resultRepository.findByUserAndTargetId(user,id)
+                    .map((x)-> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
+                            .orElse(null)
+                    );
+        }
+        return new UserInfoResponse(user.getNickName(),results);
     }
 }
