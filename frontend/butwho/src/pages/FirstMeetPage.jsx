@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {Conversation, Choice} from '../components/ScriptTexts';
-import backgroundImg from '../assets/images/firstMeet.svg';
 import {createContext, useContext, useState} from 'react';
 import firstMeet from '../scripts/Script';
 
@@ -23,11 +22,13 @@ const NarrationIndex = createContext(null);
 
 const Page = ()=> {
     const { index, increaseIndex } = useContext(NarrationIndex);
-
+    const [ choice, setChoice ] = useState(null);
+    console.log(choice);
     return (
-        <PagesStyle onClick={increaseIndex} image={backgroundImg}>
+        <PagesStyle onClick={firstMeet[index].type === 'narration' ? increaseIndex : ()=>{}} image={backgroundImg}>
             {firstMeet[index].type === 'narration' && <Conversation name='나' image={gojyoImage} text={firstMeet[index].text} />}
-            {firstMeet[index].type === 'choice' && <Choice text={firstMeet[index].text} />}
+            {(choice === null) && firstMeet[index].type === 'choice' && <Choice choice={setChoice} text={firstMeet[index].choices}/>}
+            {(choice !== null) && firstMeet[index].type === 'choice' && <Conversation text={choice} />}
         </PagesStyle>
     );
 }
@@ -46,7 +47,7 @@ const gojyoImage = "https://i.namu.wiki/i/ZUrEBCVWrZwEIQ6KjWWNvsfSGvVgntvCWGIpdZ
 //   },
 // }));
 
-function FirstMeetPage(){
+function FirstMeetPage(script){
     // const {index, setIndex} = narrationIndex();
 
     const [index, setIndex] = useState(0);

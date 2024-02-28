@@ -42,9 +42,9 @@ const ScriptText = styled.div`
     font-size: 0.9em;
 `
 
-function Script({name, image, text}){
+function Script({name, image, text, onClick}) {
   return (
-    <FlexContainer>
+    <FlexContainer onClick={onClick}>
         <Name>{name}</Name>
         <ScriptBox>
             {image&&<Image src={image} />}
@@ -64,11 +64,12 @@ function Conversation({name, image, text}) {
     );
 }
 
-function Choice({text:[...choices]}) {
+function Choice({text:[...choices], choice:asdf}) {
+    
     return (
         <BottomContainer>
             {choices.map((choice,i) => {
-                return <Script name={`#${i+1}`} text={choice} />
+                return <Script name={`#${i+1}`} text={choice.text} onClick={()=>asdf(choice.answer)}/>
             })}
         </BottomContainer>
     );

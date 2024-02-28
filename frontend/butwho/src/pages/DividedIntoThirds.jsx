@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import backgroundImg from '../assets/images/firstMeet.svg';
 import { Conversation, Choice } from "../components/ScriptTexts";
-import firstMeet from '../scripts/Script';
+//import firstMeet from '../scripts/Script';
 import { create } from 'zustand';
 
 const FlexContainer = styled.div`
