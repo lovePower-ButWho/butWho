@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {Conversation, Choice} from '../components/ScriptTexts';
-import {createContext, useContext, useState} from 'react';
+import { useState } from 'react';
 import backgroundImg from '../assets/images/firstMeet.svg'
 
 const FlexContainer = styled.div`
@@ -18,12 +18,14 @@ const PagesStyle = styled.div`
     position: relative;
 `;
 
-const NarrationIndex = createContext(null);
-
 const Page = ({script, image})=> {
-    const { index, increaseIndex } = useContext(NarrationIndex);
+    const [ index, setIndex ] = useState(0);
     const [ choice, setChoice ] = useState(null);
 
+    const increaseIndex = () => {
+        if(index === (script.length)-1) return;
+        setIndex(index+1);
+    };
     //onClick 함수 새로 정의해서 type=narration일 때는 increaseIndex, choice===null일 때는 아무동작X, choice!=null이 아닐 때는 nextPage
     return (
         <PagesStyle onClick={script[index].type === 'narration' ? increaseIndex : ()=>{}} image={image}>
@@ -49,25 +51,10 @@ const gojyoImage = "https://i.namu.wiki/i/ZUrEBCVWrZwEIQ6KjWWNvsfSGvVgntvCWGIpdZ
 // }));
 
 function FirstMeetPage({script}){
-    // const {index, setIndex} = narrationIndex();
-
-    const [index, setIndex] = useState(0);
-    const increaseIndex = ()=>{
-        if(index === script.script.length-1) return;
-        setIndex(index+1)
-    };  //useContext 쓰지 말고 위에 Page 컴포넌트에서 useState로 처리
-
-    // const nextPage = ()=>{
-    //     if(index === script.script.length-1) {
-    //       setPage(page+1)
-    //     }
-    //   };
     
     return(
         <FlexContainer>
-            <NarrationIndex.Provider value={{index, increaseIndex}}>
-                <Page script={script.script} image={script.backgroundImg}/>
-            </NarrationIndex.Provider>
+            <Page script={script.content} image={script.backgroundImg}/>
         </FlexContainer>
     )
 }

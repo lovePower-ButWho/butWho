@@ -1,7 +1,7 @@
 
 const firstMeet = {
     backgroundImg: (await import('../assets/images/firstMeet.svg')).default,  //top level await: async 안에서가 아니더라도 밖에서도 쓸 수 있음!
-    script: [
+    content: [
         {
     type:'narration',
     text:'설레는 신학기! 사진 동아리에 새로 가입했다'
@@ -25,7 +25,7 @@ const firstMeet = {
 
 const secondMeet = {
     backgroundImg: (await import('../assets/images/firstMeet.svg')).default, 
-    script: [
+    content: [
         {
     type:'narration',
     text:'설레는 신학기! 사진 동아리에 새로 가입했다'
