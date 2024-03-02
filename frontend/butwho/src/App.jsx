@@ -1,7 +1,7 @@
 import './App.css';
-import FirstMeetPage from './pages/FirstMeetPage';
+import MainPage from './pages/MainPage';
 import { createContext, useContext, useState } from 'react';  //import할 때 중괄호는 구조분해할당이 아니라 변수(변수이름)로 내보낸 것이다
-import script from './scripts/Script';
+import olderScript from './scripts/OlderScript';
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
   
   return (
     <ScoreContext.Provider value={{page, setPage, result, setResult}}>
-      <FirstMeetPage script={script[page]}/>
+      <MainPage script={olderScript[page]}/>
     </ScoreContext.Provider>
   );
 }

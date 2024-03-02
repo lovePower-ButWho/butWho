@@ -4,20 +4,22 @@ const firstMeet = {
     content: [
         {
     type:'narration',
+    name:'나',
     text:'설레는 신학기! 사진 동아리에 새로 가입했다'
 }, {
     type: 'narration',
+    name:'나',
     text: '음... 동아리 첫 모임인데 아무도 말을 하지 않네...'
 }, {
     type: 'choice',
     choices: [
         { 
             text: '조금 어색하긴 하지만 내가 먼저 말을 꺼내 볼까?',
-            answer: '내가 먼저 말을 꺼내자 한 선배가 잘 대답해 줘서 어색한 분위기가 조금 깨졌다.'
+            answer: '내가 먼저 말을 꺼내자 한 선배가 잘 대답해 줘서 어색한 분위기가 조금 깨졌다. 역시 말을 꺼내길 잘했어!'
         },
         {
             text: '너무 어색해... 나도 그냥 조용히 있어야겠다.',
-            answer: '역시 말을 꺼내길 잘했어!'
+            answer: '침묵의 상태로 인고의 시간이 흐르던 중 누군가가 말을 꺼내기 시작했고,  한 선배가 동조해주기 시작했다.'
         }
     ]
 }]
@@ -28,9 +30,11 @@ const secondMeet = {
     content: [
         {
     type:'narration',
+    name:'나',
     text:'설레는 신학기! 사진 동아리에 새로 가입했다'
 }, {
     type: 'narration',
+    name:'나',
     text: '음... 동아리 첫 모임인데 아무도 말을 하지 않네...'
 }, {
     type: 'choice',

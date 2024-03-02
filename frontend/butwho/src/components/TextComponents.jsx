@@ -57,7 +57,6 @@ function Script({name, image, text, onClick}) {
 
 function Conversation({name, image, text}) {
  
-    console.log(name);
     return (
         <BottomContainer>
             <Script name={name} image={image} text={text} />
@@ -76,4 +75,4 @@ function Choice({text:[...choices], choice:asdf}) {
     );
 }
 
-export {Conversation, Choice};
+export { Conversation, Choice };
