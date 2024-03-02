@@ -22,7 +22,7 @@ const Page = ({script, image})=> {
     const [ index, setIndex ] = useState(0);
     const [ choice, setChoice ] = useState(null);
 
-    const { page, setPage } = useContext(PageContext);
+    const nextPage = useContext(PageContext);
 
     const increaseIndex = () => {
         if(index === (script.length)-1) { return; };
@@ -33,12 +33,12 @@ const Page = ({script, image})=> {
         if (script[index].type === 'narration') { increaseIndex(); }
         else if (script[index].type === 'choice') {
             if (choice === null) {  }
-            else if (choice !== null) { setPage(page+1); setIndex(0); setChoice(null);}
+            else if (choice !== null) { nextPage(); setIndex(0); setChoice(null);}
         }
     }
 
-    console.log(script);
-    //onClick 함수 새로 정의해서 type=narration일 때는 increaseIndex, choice===null일 때는 아무동작X, choice!=null이 아닐 때는 nextPage
+    //페이지 다음 꺼 스크립트 없을 때 예외처리하기
+
     return (
         <PagesStyle onClick={handleClick} image={image}>
             {script[index].type === 'narration' && <Conversation name={script[index].name} image={gojyoImage} text={script[index].text} />}

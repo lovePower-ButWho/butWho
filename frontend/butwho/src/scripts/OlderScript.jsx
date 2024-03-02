@@ -51,4 +51,30 @@ const secondMeet = {
 }]
 };
 
-export default [firstMeet, secondMeet];
+const thirdMeet = {
+    backgroundImg: (await import('../assets/images/firstMeet.svg')).default, 
+    content: [
+        {
+    type:'narration',
+    name:'나',
+    text:'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi in, exercitationem expedita, fugiat ex consequatur nobis, aut itaque provident saepe quis dolor nisi voluptas labore deserunt quia magnam blanditiis voluptatibus.',
+}, {
+    type: 'narration',
+    name:'나',
+    text: 'djfklasdfas'
+}, {
+    type: 'choice',
+    choices: [
+        { 
+            text: 'djfka lsd;f',
+            answer: 'dfjask df.'
+        },
+        {
+            text: 'sdaf asd',
+            answer: 'asdf a'
+        }
+    ]
+}]
+};
+
+export default [firstMeet, secondMeet, thirdMeet];
