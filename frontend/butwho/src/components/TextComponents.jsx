@@ -69,7 +69,7 @@ function Choice({text:[...choices], choice:asdf}) {
     return (
         <BottomContainer>
             {choices.map((choice,i) => {
-                return <Script name={`#${i+1}`} text={choice.text} onClick={()=>asdf(choice.answer)}/>
+                return <Script key={i+1} name={`#${i+1}`} text={choice.text} onClick={()=>asdf(choice.answer)}/>
             })}
         </BottomContainer>
     );
