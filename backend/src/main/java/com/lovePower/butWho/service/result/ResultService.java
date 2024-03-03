@@ -6,6 +6,7 @@ import com.lovePower.butWho.domain.user.User;
 import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
+import com.lovePower.butWho.dto.result.response.PlayResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
 import com.lovePower.butWho.dto.result.response.UserInfoResponse;
 import jakarta.validation.constraints.Null;
@@ -46,7 +47,7 @@ public class ResultService {
                 .user(user)
                 .build();
         user.save(result);
-        return new ResultSaveResponse(mbti, request.getLovePower());
+        return new ResultSaveResponse(mbti);
     }
 
     //모든 공략 후 최종 결과 반환
@@ -61,11 +62,11 @@ public class ResultService {
 
     //캐릭터별 공략여부
     @Transactional
-    public List<Boolean> getPlayed(String email){
+    public List<PlayResponse> getPlayed(String email){
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-        List<Boolean> isplayed = new ArrayList<>();
+        List<PlayResponse> isplayed = new ArrayList<>();
         for(Integer id:targetIds){
-            isplayed.add(resultRepository.existsByUserAndTargetId(user,id));
+            isplayed.add(new PlayResponse(id,resultRepository.existsByUserAndTargetId(user,id)));
         }
         return isplayed;
     }

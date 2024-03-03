@@ -6,10 +6,8 @@ import lombok.Getter;
 @Getter
 public class ResultSaveResponse {
     private String mbti;
-    private Integer lovePower;
 
-    public ResultSaveResponse(String mbti,Integer lovePower){
+    public ResultSaveResponse(String mbti){
         this.mbti = mbti;
-        this.lovePower = lovePower;
     }
 }

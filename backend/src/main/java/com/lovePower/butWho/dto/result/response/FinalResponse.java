@@ -4,8 +4,6 @@ import com.lovePower.butWho.domain.result.Result;
 import lombok.Getter;
 
 import java.util.List;
-
-
 @Getter
 public class FinalResponse {
     Integer targetId;

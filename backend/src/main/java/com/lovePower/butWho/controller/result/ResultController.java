@@ -3,6 +3,7 @@ package com.lovePower.butWho.controller.result;
 import com.lovePower.butWho.domain.result.Result;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
+import com.lovePower.butWho.dto.result.response.PlayResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
 import com.lovePower.butWho.dto.result.response.UserInfoResponse;
 import com.lovePower.butWho.service.result.ResultService;
@@ -37,7 +38,7 @@ public class ResultController {
 
     //해당 유저의 공략여부
     @GetMapping("/play")
-    public List<Boolean> isPlayed(@RequestHeader("Authorization") String email){
+    public List<PlayResponse> isPlayed(@RequestHeader("Authorization") String email){
         return resultService.getPlayed(email);
     }
 
