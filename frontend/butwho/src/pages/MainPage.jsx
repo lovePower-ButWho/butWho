@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Conversation, Choice } from '../components/TextComponents';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { PageContext } from '../App';
 
 const FlexContainer = styled.div`
@@ -22,19 +22,20 @@ const Page = ({script, image})=> {
     const [ index, setIndex ] = useState(0);
     const [ choice, setChoice ] = useState(null);
 
-    const nextPage = useContext(PageContext);
+    const {page, nextPage} = useContext(PageContext);
 
-    const increaseIndex = () => {
-        if(index === (script.length)-1) { return; };
-        setIndex(index+1);
-    };
+    //훅 위에 if문 있으면 안 됨 -> 훅은 그 컴포넌트 안에서는 무슨 일이 있어도 실행되어야 함(조건적으로 실행되면 XXXX) -> 초기화되니까
+    //혹시나 조건적으로 실행해야 할 일이 있으면 훅 '내부' 함수에서 if문 쓸 것
+
+    useEffect(() => {
+        setIndex(0);
+        setChoice(null);
+    }, [page]);
 
     const handleClick = () => {
-        if (script[index].type === 'narration') { increaseIndex(); }
-        else if (script[index].type === 'choice') {
-            if (choice === null) {  }
-            else if (choice !== null) { nextPage(); setIndex(0); setChoice(null);}
-        }
+        if (script[index].type === 'narration') return setIndex(index+1);
+        if (script[index].type === 'choice' && choice === null) return;
+        nextPage();
     }
 
     //페이지 다음 꺼 스크립트 없을 때 예외처리하기
@@ -63,8 +64,6 @@ const gojyoImage = "https://i.namu.wiki/i/ZUrEBCVWrZwEIQ6KjWWNvsfSGvVgntvCWGIpdZ
 // }));
 
 function MainPage({script}){
-
-    console.log(script.content);
     
     return(
         <FlexContainer>

@@ -16,17 +16,17 @@ function App() {
     //이렇게 안 해 주면 함수가 정의되는 시점에서의 state값(이전 페이지)가 됨
   };
 
-  const [result, setResult] = useState({
-    e:0,s:0,t:0,p:0 
-  });
-  const createResult = (type) => {
-    const newResult = {...result};
-    newResult[type]++;
-    setResult(newResult);
-  }
+  // const [result, setResult] = useState({
+  //   e:0,s:0,t:0,p:0 
+  // });
+  // const createResult = (type) => {
+  //   const newResult = {...result};
+  //   newResult[type]++;
+  //   setResult(newResult);
+  // }
   
   return (
-    <PageContext.Provider value={ nextPage }>  
+    <PageContext.Provider value={ {page, nextPage} }>  
       <MainPage script={olderScript[page]}/>
     </PageContext.Provider>
   );
