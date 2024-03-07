@@ -9,6 +9,8 @@ import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.PlayResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
 import com.lovePower.butWho.dto.result.response.UserInfoResponse;
+import com.lovePower.butWho.error.CustomException;
+import com.lovePower.butWho.error.ErrorCode;
 import jakarta.validation.constraints.Null;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.lovePower.butWho.error.ErrorCode.NOT_COMPLETED;
 
 @Service
 public class ResultService {
@@ -54,10 +58,18 @@ public class ResultService {
     @Transactional
     public List<FinalResponse> getFinalResult(String email){
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-        return user.getAllResults().stream()
+//        return user.getAllResults().stream()
+//                .sorted(Comparator.comparingInt(Result::getTargetId))
+//                .map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
+//                .collect(Collectors.toList());
+        List<FinalResponse> finalResponses = user.getAllResults().stream()
                 .sorted(Comparator.comparingInt(Result::getTargetId))
                 .map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
-                .collect(Collectors.toList());
+                .toList();
+        if (finalResponses.size() < 3){
+            throw new CustomException(NOT_COMPLETED);
+        }
+        return finalResponses;
     }
 
     //캐릭터별 공략여부

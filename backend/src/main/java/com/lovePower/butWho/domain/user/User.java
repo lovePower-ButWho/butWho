@@ -3,6 +3,7 @@ package com.lovePower.butWho.domain.user;
 import com.lovePower.butWho.domain.result.Result;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
+import com.lovePower.butWho.error.CustomException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,8 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.lovePower.butWho.error.ErrorCode.NOT_COMPLETED;
 
 @Entity
 @Getter
@@ -43,7 +46,9 @@ public class User {
     }
 
     public void clear(){
-        //TODO 전부 다 클리어하지 않았을 경우 예외처리
+        if (allResults.size() < 3) {
+            throw new CustomException(NOT_COMPLETED);
+        }
         allResults.clear();
     }
 }
