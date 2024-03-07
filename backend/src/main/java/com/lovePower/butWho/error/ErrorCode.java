@@ -13,5 +13,5 @@ public enum ErrorCode {
     NOT_COMPLETED("BAD_REQUEST","공략이 모두 완료되지 않았습니다.");
 
     private final String error;
-    private final String msg;
+    private final String message;
 }

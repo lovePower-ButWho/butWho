@@ -24,7 +24,7 @@ public class ExceptionController {
         log.info(e.getErrorCode().getError());
         ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
                 .error(e.getErrorCode().getError())
-                .msg(e.getErrorCode().getMsg())
+                .msg(e.getErrorCode().getMessage())
                 .build();
         return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
     }
