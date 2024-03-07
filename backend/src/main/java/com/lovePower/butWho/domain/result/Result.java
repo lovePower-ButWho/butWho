@@ -16,7 +16,7 @@ public class Result {
     @Column(name = "target_id")
     private Integer targetId = null;
 
-    @Column(length=4)
+    @Column(length = 4)
     private String mbti = null;
 
     @Column(name = "love_power")
@@ -27,7 +27,7 @@ public class Result {
     private User user;
 
     @Builder
-    public Result(Integer targetId,String mbti,Integer lovePower,User user){
+    public Result(Integer targetId, String mbti, Integer lovePower, User user) {
         this.targetId = targetId;
         this.mbti = mbti;
         this.lovePower = lovePower;
