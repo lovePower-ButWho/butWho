@@ -8,7 +8,9 @@ import com.lovePower.butWho.service.user.UserService;
 import com.lovePower.butWho.util.JwtUtil;
 import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.request.user.LoginRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -77,5 +79,16 @@ public class UserController {
         final String jwt = jwtUtil.generateToken(userDetails, user.getAuthority());
 
         return ResponseEntity.ok(new LoginResponse(jwt));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+
+        String token = jwtUtil.extractTokenFromRequest(request);
+        if (token == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok().build();
     }
 }

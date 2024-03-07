@@ -25,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Getter
 @Setter
 public class User implements UserDetails {
-    
+
     @Id
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식을 맞춰주세요.")
