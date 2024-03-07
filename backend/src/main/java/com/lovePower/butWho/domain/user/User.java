@@ -16,18 +16,20 @@ import java.util.Collections;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
+@Entity(name = "user")
 @Getter
+@Setter
 public class User implements UserDetails {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식을 맞춰주세요.")
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
@@ -38,6 +40,7 @@ public class User implements UserDetails {
 
     @Column(name = "authority")
     private int authority;
+
     //각 유저가 결과를 가짐
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Result> allResults = new ArrayList<>();
