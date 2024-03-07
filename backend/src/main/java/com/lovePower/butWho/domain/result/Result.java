@@ -2,13 +2,7 @@ package com.lovePower.butWho.domain.result;
 
 
 import com.lovePower.butWho.domain.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -39,8 +33,7 @@ public class Result {
         this.lovePower = lovePower;
         this.user = user;
     }
-
-    protected Result() {
+    protected Result(){
 
     }
 
