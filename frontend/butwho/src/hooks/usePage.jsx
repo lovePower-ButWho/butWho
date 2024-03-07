@@ -16,7 +16,7 @@ const usePage = (olderScript) => {
         return {page, nextPage};
     }, [page, nextPage]);
 
-    return { pageValue, page };
+    return pageValue;
 }
 
 export default usePage;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from 'react'
+import {React, useState} from 'react';
 
 const BottomContainer = styled.div`
     position: absolute;
@@ -55,21 +55,26 @@ function Script({name, image, text, onClick}) {
 }
 
 
-function Conversation({name, image, text}) {
+function Conversation({name, image, text, onClick}) {
  
     return (
-        <BottomContainer>
+        <BottomContainer onClick={onClick}>
             <Script name={name} image={image} text={text} />
         </BottomContainer>
     );
 }
 
-function Choice({text:[...choices], choice:asdf}) {
-    
+function Choice({text:[...choices], choice: setChoiceIndex, plusScore}) {
+
+    const handleChoice = (index) => () => { //함수를 리턴하는 함수를 실행(curring 기법)
+        setChoiceIndex(index);  
+        plusScore(choices[index].mbti, choices[index].lovePower);
+    }
+
     return (
         <BottomContainer>
             {choices.map((choice,i) => {
-                return <Script key={i+1} name={`#${i+1}`} text={choice.text} onClick={()=>asdf(choice.answer)}/>
+                return <Script key={i+1} name={`#${i+1}`} text={choice.text} onClick={handleChoice(i)}/>
             })}
         </BottomContainer>
     );
