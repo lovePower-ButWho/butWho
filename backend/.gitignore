@@ -1,13 +1,11 @@
 HELP.md
 .gradle
 build/
-.DS_Store
 application.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-application.yml
 ### STS ###
 .apt_generated
 .classpath
@@ -25,8 +23,6 @@ bin/
 *.iws
 *.iml
 *.ipr
-*.yml
-
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
