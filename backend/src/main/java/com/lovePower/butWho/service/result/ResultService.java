@@ -65,7 +65,7 @@ public class ResultService {
         List<FinalResponse> finalResponses = user.getAllResults().stream()
                 .sorted(Comparator.comparingInt(Result::getTargetId))
                 .map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
-                .collect(Collectors.toList());
+                .toList();
         if (finalResponses.size() < 3){
             throw new CustomException(NOT_COMPLETED);
         }
