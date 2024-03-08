@@ -1,18 +1,10 @@
 package com.lovePower.butWho.service.user;
 
-import com.lovePower.butWho.domain.user.User;
-import com.lovePower.butWho.domain.user.UserRepository;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
-    private final UserRepository userRepository;
+import com.lovePower.butWho.dto.UserDto;
+import java.util.List;
 
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
-
-    public void join(User user){
-        userRepository.save(user);
-    }
+public interface UserService {
+    UserDto createUser(UserDto userDto);
+    UserDto findUserByEmail(String email);
 }
