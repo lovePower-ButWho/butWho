@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ImageMatch from "../scripts/ImageMatch";
+import { NAMEENUM } from "../enum";
 import {React, useState} from 'react';
 
 const BottomContainer = styled.div`
@@ -22,19 +24,27 @@ const Name = styled.div`
     background-color: #AFADFF;
     min-height: 1.2em;
     width: 40%;
+    z-index: 10;
 `
 
 const ScriptBox = styled.div`
     font-family: 'pretendard-regular';
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding: 0em 0.5em;
     gap: 0.5em;
+    z-index: 10;
     background: linear-gradient(0deg, rgba(255,248,248,0.7) 0%, rgba(255,248,248,0.7) 80%,rgba(255,255,255) 100%);
-    padding: 0.5em;
+    min-height: ${({$minheight})=>$minheight}rem;
 `
 
 const Image = styled.img`
-    width: 30%;
+    position: absolute;
+    z-index: 1;
+    bottom: 5em; 
+    width: 70%;
+    ${(props) => (props.$name === NAMEENUM.GIRL) ? 'left: 0;' : 'right: 0;'}
 `
 
 const ScriptText = styled.div`
@@ -42,12 +52,12 @@ const ScriptText = styled.div`
     font-size: 0.9em;
 `
 
-function Script({name, image, text, onClick}) {
+function Script({minheight, name, image, text, onClick}) {
   return (
     <FlexContainer onClick={onClick}>
+        {image&&<Image $name={name} src={image} />}
         <Name>{name}</Name>
-        <ScriptBox>
-            {image&&<Image src={image} />}
+        <ScriptBox $minheight={minheight}>
             <ScriptText>{text}</ScriptText>
         </ScriptBox>
     </FlexContainer>
@@ -55,11 +65,11 @@ function Script({name, image, text, onClick}) {
 }
 
 
-function Conversation({name, image, text, onClick}) {
+function Conversation({name, text, onClick}) {
  
     return (
         <BottomContainer onClick={onClick}>
-            <Script name={name} image={image} text={text} />
+            <Script minheight={5} name={name} image={ImageMatch[name]} text={text} />
         </BottomContainer>
     );
 }
@@ -74,7 +84,7 @@ function Choice({text:[...choices], choice: setChoiceIndex, plusScore}) {
     return (
         <BottomContainer>
             {choices.map((choice,i) => {
-                return <Script key={i+1} name={`#${i+1}`} text={choice.text} onClick={handleChoice(i)}/>
+                return <Script minheight = {3} key={i+1} name={`#${i+1}`} text={choice.text} onClick={handleChoice(i)}/>
             })}
         </BottomContainer>
     );

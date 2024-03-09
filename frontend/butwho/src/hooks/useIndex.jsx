@@ -1,4 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
+import { TYPEENUM } from '../enum';
 import { PageContext } from '../contexts/PageContext';
 
 const useIndex = (script) => {
@@ -20,8 +21,8 @@ const useIndex = (script) => {
     }, [page]);
 
     const handleClick = () => {
-        if (script[index].type === 'narration') return setIndex(index+1);
-        if (script[index].type === 'choice' && choice === null) return;
+        if (script[index].type === TYPEENUM.NARR) return setIndex(index+1);
+        if (script[index].type === TYPEENUM.CHOICE && choice === null) return;
         nextPage();
     }
 
