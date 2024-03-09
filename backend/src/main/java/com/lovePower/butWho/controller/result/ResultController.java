@@ -1,6 +1,7 @@
 package com.lovePower.butWho.controller.result;
 
 import com.lovePower.butWho.domain.result.Result;
+import com.lovePower.butWho.domain.user.User;
 import com.lovePower.butWho.dto.result.request.ResultSaveRequest;
 import com.lovePower.butWho.dto.result.response.FinalResponse;
 import com.lovePower.butWho.dto.result.response.PlayResponse;
@@ -8,6 +9,8 @@ import com.lovePower.butWho.dto.result.response.ResultSaveResponse;
 import com.lovePower.butWho.dto.result.response.UserInfoResponse;
 import com.lovePower.butWho.service.result.ResultService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,7 +53,15 @@ public class ResultController {
 
     //유저 정보 결과
     @GetMapping("/myInfo")
-    public UserInfoResponse getUserInfo(@RequestHeader("Authorization") String email){
+    public UserInfoResponse getUserInfo(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = ((User)userDetails).getEmail();
         return resultService.getUserInfo(email);
+    }
+
+    //테스트용
+    @GetMapping("/result")
+    public ResponseEntity<?> helloUser() {
+        return  ResponseEntity.ok().build();
     }
 }
