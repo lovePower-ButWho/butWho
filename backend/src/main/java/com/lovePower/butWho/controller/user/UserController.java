@@ -39,14 +39,18 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) throws Exception {
+        if(userRepository.existsByEmail(userDto.getEmail())) {
+            throw new Exception("이미 존재하는 사용자 정보입니다.");
+        }
 
         userService.createUser(userDto);
+
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect user name or password", e);
+            throw new Exception("옳지 않은 이메일 혹은 비밀번호입니다.", e);
         }
 
         final UserDetails userDetails = userDetailsService
@@ -67,7 +71,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect user name or password", e);
+            throw new Exception("옳지 않은 이메일 혹은 비밀번호입니다.", e);
         }
 
         final UserDetails userDetails = userDetailsService
@@ -90,5 +94,10 @@ public class UserController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/result")
+    public ResponseEntity<?> helloUser() {
+        return  ResponseEntity.ok().build();
     }
 }

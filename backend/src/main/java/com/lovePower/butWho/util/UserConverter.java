@@ -14,7 +14,7 @@ public class UserConverter {
         User user = new User();
         user.setEmail(userDto.getEmail());
         user.setAuthority(1);
-        user.setNickName(user.getNickName());
+        user.setNickName(userDto.getName());
         if (userDto.getPassword() != null) {
             String encodedPassword = passwordEncoder.encode(userDto.getPassword());
             user.setPassword(encodedPassword);

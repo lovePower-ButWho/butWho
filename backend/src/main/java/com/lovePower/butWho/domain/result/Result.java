@@ -22,7 +22,7 @@ public class Result {
     @Column(name = "love_power")
     private Integer lovePower = null;
 
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "email", referencedColumnName = "email")
     @ManyToOne
     private User user;
 
