@@ -27,27 +27,35 @@ public class ResultController {
 
     //캐릭터별 결과 저장
     @PostMapping("/result/{character}")
-    public ResultSaveResponse saveResult(@RequestHeader("Authorization") String email,
+    public ResultSaveResponse saveResult(Authentication authentication,
                                          @RequestBody ResultSaveRequest request, @PathVariable Integer character)
     {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = ((User)userDetails).getEmail();
         return resultService.saveCharacterResult(email,request,character);
     }
 
     //해당 유저의 모든 공략 후 최종 결과 반환
     @GetMapping("/result/final")
-    public List<FinalResponse> allResults(@RequestHeader("Authorization") String email){
+    public List<FinalResponse> allResults(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = ((User)userDetails).getEmail();
         return resultService.getFinalResult(email);
     }
 
     //해당 유저의 공략여부
     @GetMapping("/play")
-    public List<PlayResponse> isPlayed(@RequestHeader("Authorization") String email){
+    public List<PlayResponse> isPlayed(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = ((User)userDetails).getEmail();
         return resultService.getPlayed(email);
     }
 
     //새로 플레이하고 싶은 경우 공략 결과 초기화하기
     @PostMapping("/clear")
-    public void clearResult(@RequestHeader("Authorization") String email){
+    public void clearResult(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String email = ((User)userDetails).getEmail();
         resultService.clearResult(email);
     }
 

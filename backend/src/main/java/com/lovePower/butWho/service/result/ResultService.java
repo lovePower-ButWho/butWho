@@ -58,10 +58,6 @@ public class ResultService {
     @Transactional
     public List<FinalResponse> getFinalResult(String email){
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-//        return user.getAllResults().stream()
-//                .sorted(Comparator.comparingInt(Result::getTargetId))
-//                .map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
-//                .collect(Collectors.toList());
         List<FinalResponse> finalResponses = user.getAllResults().stream()
                 .sorted(Comparator.comparingInt(Result::getTargetId))
                 .map((x) -> new FinalResponse(x.getTargetId(),x.getMbti(),x.getLovePower()))
