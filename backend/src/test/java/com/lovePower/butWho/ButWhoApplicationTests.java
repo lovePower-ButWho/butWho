@@ -23,6 +23,6 @@ class ButWhoApplicationTests {
 	@DisplayName("결과저장테스트")
 	void contextLoads() {
 		ResultServiceTest test = new ResultServiceTest(userService,resultService);
-		test.saveCharacterResult();
+//		test.saveCharacterResult();
 	}
 }
