@@ -9,8 +9,14 @@ import java.util.Collection;
 import java.util.Collections;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +46,8 @@ public class User implements UserDetails {
     @Column(name = "authority")
     private int authority;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    //각 유저가 결과를 가짐
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Result> allResults = new ArrayList<>();
 
     @Builder
@@ -57,7 +64,6 @@ public class User implements UserDetails {
         this.nickName = null;
         this.authority = -1;
     }
-
     public void save(Result result) {
         this.allResults.add(result);
     }
