@@ -1,6 +1,6 @@
-import girl from '../assets/images/girl2x.png';
+import girl from '../assets/images/girl.png';
 import older from '../assets/images/older.png';
-import peer from '../assets/images/peer2x.png';
+import peer from '../assets/images/peer.png';
 import younger from '../assets/images/younger.png';
 import { NAMEENUM } from '../enum';
 

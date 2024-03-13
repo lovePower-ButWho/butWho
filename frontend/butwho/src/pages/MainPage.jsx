@@ -3,6 +3,7 @@ import { Conversation, Choice } from '../components/TextComponents';
 import { TYPEENUM } from '../enum';
 import useIndex from '../hooks/useIndex';
 import useResult from '../hooks/useResult';
+import { PageContext } from '../contexts/PageContext';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -19,32 +20,31 @@ const PagesStyle = styled.div`
     position: relative;
 `;
 
-const Page = ({script, image})=> {
+const Page = ()=> {
 
-    const { index, choice, setChoiceIndex, handleClick } = useIndex(script);
+    const { script, backgroundImg, choice, setChoiceIndex, handleClick } = useIndex();
 
     const plusScore = useResult();
+
     
-//onClick={()=>createResult(script[index].choices[choice])}
+//onClick={()=>createResult(script.choices[choice])}
     return (
-        <PagesStyle onClick={handleClick} $image={image}>
-            {script[index].type === TYPEENUM.NARR && <Conversation name={script[index].name} text={script[index].text} />}
-            {(choice === null) && script[index].type === TYPEENUM.CHOICE && 
-                <Choice choice={setChoiceIndex} text={script[index].choices} plusScore={plusScore}/>}
-            {(choice !== null) && script[index].type === TYPEENUM.CHOICE && 
-                <Conversation name={script[index].choices[choice].speaker}
-                text={script[index].choices[choice].answer} />}
+        <PagesStyle onClick={handleClick} $image={backgroundImg}>
+            {script.type === TYPEENUM.NARR && <Conversation name={script.name} text={script.text} />}
+            {(choice === null) && script.type === TYPEENUM.CHOICE && 
+                <Choice choice={setChoiceIndex} text={script.choices} plusScore={plusScore}/>}
+            {(choice !== null) && script.type === TYPEENUM.CHOICE && 
+                <Conversation name={script.choices[choice].speaker}
+                text={script.choices[choice].answer} />}
         </PagesStyle>
     );
 }
 
-//const gojyoImage = "https://i.namu.wiki/i/ZUrEBCVWrZwEIQ6KjWWNvsfSGvVgntvCWGIpdZmrtZaWjG3pBaF16sesKxsU2LtQfJFqtHaoXyGSoB2Kbj2OFQ.webp";
-
-function MainPage({script}){
+function MainPage(){
     
     return(
         <FlexContainer>
-            <Page script={script.content} image={script.backgroundImg}/>
+            <Page />
         </FlexContainer>
     )
 }

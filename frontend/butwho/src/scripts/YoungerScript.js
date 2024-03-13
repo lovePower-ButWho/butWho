@@ -167,23 +167,23 @@ const interrupt = {
     content: [
         {
     type:TYPEENUM.NARR,
-    name:'',
-    text:'열심히 공부 중인데 후배는 지루한 건지 계속 나에게 말을 걸었다.',
+    name:NAMEENUM.GIRL,
+    text:'열심히 공부 중인데 후배는 지루한 건지 계속 나에게 말을 걸었다',
 },  {
     type: TYPEENUM.CHOICE,
     choices: [
         { 
             text: '얘도 나만큼 활발하네! 텐션 맞으니까 재밌다~',
             answer: '(하던 공부를 멈추고 대화에 집중한다) 그래서 어떻게 됐는데?',
-            speaker: NAMEENUM.YOUNGER,
-            mbti: 'S',
+            speaker: NAMEENUM.GIRL,
+            mbti: 'E',
             lovePower: true,
         },
         {
-            text: '재밌긴 한데 너무 기빨린다... 공부하고 싶어',
+            text: '재밌긴 한데 기빨린다... 공부하고 싶어',
             answer: '미안한데... 지금은 공부하러 왔으니 얘기는 이따 밥 먹으면서 할까?',
-            speaker: NAMEENUM.YOUNGER,
-            mbti: 'N',
+            speaker: NAMEENUM.GIRL,
+            mbti: 'I',
             lovePower: false,
         }
     ]
@@ -371,4 +371,6 @@ const rollerCoaster = {
 }]
 };
 
-export default [volunteerMeeting, afterParty, advice, studyTogether, cafeStudy, interrupt, toilet, wayHomeConfession, datePlan, amusementPark, horrorHouse, rollerCoaster];
+export default [volunteerMeeting, afterParty, advice, studyTogether, cafeStudy, interrupt, horrorHouse];
+
+//interrupt, toilet, wayHomeConfession, datePlan, rollerCoaster

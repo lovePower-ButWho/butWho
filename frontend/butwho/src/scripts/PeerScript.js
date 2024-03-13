@@ -15,7 +15,7 @@ const classRoom = {
 }, {
     type: TYPEENUM.NARR,
     name:NAMEENUM.GIRL,
-    text: '문득 오늘 점심 먹고 집에 가는 지, 오전 수업만 하고 집에 가는 지 궁금해졌다.'
+    text: '문득 오늘 점심 먹고 집에 가는지, 오전 수업만 하고 집에 가는지 궁금해졌다.'
 },{
     type: TYPEENUM.CHOICE,
     choices: [

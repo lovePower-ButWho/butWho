@@ -1,17 +1,15 @@
 import './App.css';
 import MainPage from './pages/MainPage';
-import olderScript from './scripts/OlderScript';
 import { PageContext } from './contexts/PageContext';
 import usePage from './hooks/usePage';
 
 function App() {
   
-  const pageValue = usePage(olderScript);
-  
+  const pageValue = usePage();
   
   return (
     <PageContext.Provider value={ pageValue }>  
-      <MainPage script={ olderScript[pageValue.page] }/>
+      <MainPage />
     </PageContext.Provider>
   );
 }
