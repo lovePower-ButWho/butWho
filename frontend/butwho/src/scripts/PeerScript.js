@@ -426,4 +426,6 @@ const concert = {
 }]
 };
 
-export default [classRoom, cafeteria, zombie, planner, bar, icecream, schoolBand, practicePlan, peerConfession, songPoint, whereTogo, whatToeat, concert];
+const PeerScript = [classRoom, cafeteria, zombie, planner, bar, icecream, schoolBand, practicePlan, peerConfession, songPoint, whereTogo, whatToeat, concert];
+
+export default PeerScript;

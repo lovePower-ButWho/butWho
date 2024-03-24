@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ImageMatch from "../scripts/ImageMatch";
 import { NAMEENUM } from "../enum";
-import {React, useState} from 'react';
+import {React} from 'react';
 
 const BottomContainer = styled.div`
     position: absolute;
@@ -35,6 +35,7 @@ const ScriptBox = styled.div`
     padding: 0em 0.5em;
     gap: 0.5em;
     z-index: 10;
+    user-select: none;
     background: linear-gradient(0deg, rgba(255,248,248,0.7) 0%, rgba(255,248,248,0.7) 80%,rgba(255,255,255) 100%);
     min-height: ${({$minheight})=>$minheight}rem;
 `

@@ -1,4 +1,7 @@
-import {useState, useEffect} from 'react';
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { PageContext } from '../contexts/PageContext';
+import { getBoyEnumId } from '../enum';
 
 const useResult = () => {
     const [result, setResult] = useState({
@@ -23,12 +26,33 @@ const useResult = () => {
         };
     };
 
-    useEffect(() => {
-        console.log(result)
-        console.log(lovePower)
-    }, [result, lovePower]);
+    // useEffect(() => {
+    //     console.log(result)
+    //     console.log(lovePower)
+    // }, [result, lovePower]);
 
-    return plusScore;
+    const send = {...result, lovePower};
+    const {type} = useContext(PageContext);
+   
+
+    const sendResult = async() => {
+
+        axios.post('/result/' + getBoyEnumId(type), 
+        send, 
+        { 
+            headers: {
+                Authorization : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdHkiOjEsInN1YiI6ImFhYWFAbmF2ZXIuY29tIiwiaWF0IjoxNzExMjExOTUyLCJleHAiOjE3MjI0NDc5NTJ9.a7Vi_XQy6YYdfb25iV72NHF_tVmXUAzPFyZRslPNaos' 
+            }
+        }
+
+        ).then(function (response) {
+            console.log(response);
+        }).catch(function (error){
+            console.log(error);
+        });
+    }
+
+    return { sendResult, plusScore };
 }
 
 export default useResult;

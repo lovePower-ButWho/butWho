@@ -366,4 +366,6 @@ const sickBF = {
 }]
 };
 
-export default [firstMeet, secondMeet, letsgo, badPicture,takeOurPic,confession,regret,train,restaurantReserv, whatToDo, coupleRing, sickBF];
+const OlderScript = [firstMeet, secondMeet, letsgo, badPicture,takeOurPic,confession,regret,train,restaurantReserv, whatToDo, coupleRing, sickBF];
+
+export default OlderScript;

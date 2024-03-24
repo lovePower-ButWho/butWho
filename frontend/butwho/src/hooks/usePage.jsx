@@ -19,8 +19,11 @@ const usePage = () => {
         setPage(0);
     }, [type]);
 
-    const nextPage = useCallback(() => {
-        if (page === script[type].length-1) return page;
+    const nextPage = useCallback((fn) => {
+        if (page === script[type].length-1) {
+            fn();
+            return page;
+        }
         setPage(page+1);
         //setPage 안에 함수를 넣으면 set함수가 실행되는 시점에서의 state값(현재 페이지)을 첫번째 인자로 넣어줌
         //이렇게 안 해 주면 함수가 정의되는 시점에서의 state값(이전 페이지)가 됨
@@ -32,7 +35,7 @@ const usePage = () => {
     }, []);
     
     const pageValue = useMemo(() => {
-        return {nextPage, typeValue, script: script[type][page].content, backgroundImg: script[type][page].backgroundImg};
+        return {nextPage, typeValue, script: script[type][page].content, backgroundImg: script[type][page].backgroundImg, type};
     }, [page, nextPage, type, typeValue]);
 
 

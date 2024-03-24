@@ -1,7 +1,7 @@
 import {useState, useEffect, useContext} from 'react';
 import { TYPEENUM } from '../enum';
 import { PageContext } from '../contexts/PageContext';
-import OlderScript from '../scripts/OlderScript';
+//mport OlderScript from '../scripts/OlderScript';
 
 const useIndex = () => {
     const [ index, setIndex ] = useState(0);
@@ -21,13 +21,11 @@ const useIndex = () => {
         setChoice(null);
     }, [script]);
 
-    const handleClick = () => {
+    const handleClick = (fn) => () => {
         if (script[index].type === TYPEENUM.NARR) return setIndex(index+1);
         if (script[index].type === TYPEENUM.CHOICE && choice === null) return;
-        nextPage();
+        nextPage(fn);
     }
-
-    console.log(`index: ${index}`)
 
     return { script: script[index], backgroundImg, choice, setChoiceIndex, handleClick };
 }

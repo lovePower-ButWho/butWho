@@ -1,6 +1,5 @@
 import { NAMEENUM, TYPEENUM } from '../enum';
 
-
 const volunteerMeeting = {
     backgroundImg: (await import('../assets/images/firstMeet.svg')).default,  //top level await: async 안에서가 아니더라도 밖에서도 쓸 수 있음!
     content: [
@@ -371,6 +370,7 @@ const rollerCoaster = {
 }]
 };
 
-export default [volunteerMeeting, afterParty, advice, studyTogether, cafeStudy, interrupt, horrorHouse];
+const YoungerScript =  [volunteerMeeting, afterParty, advice, studyTogether, cafeStudy, interrupt, toilet,wayHomeConfession, datePlan, amusementPark, horrorHouse, rollerCoaster]
 
-//interrupt, toilet, wayHomeConfession, datePlan, rollerCoaster
+export default YoungerScript;
+

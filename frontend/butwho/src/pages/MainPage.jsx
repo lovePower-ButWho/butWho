@@ -3,13 +3,6 @@ import { Conversation, Choice } from '../components/TextComponents';
 import { TYPEENUM } from '../enum';
 import useIndex from '../hooks/useIndex';
 import useResult from '../hooks/useResult';
-import { PageContext } from '../contexts/PageContext';
-
-const FlexContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-`;
 
 const PagesStyle = styled.div`
     width: 360px;
@@ -20,33 +13,21 @@ const PagesStyle = styled.div`
     position: relative;
 `;
 
-const Page = ()=> {
+const MainPage = ()=> {
 
     const { script, backgroundImg, choice, setChoiceIndex, handleClick } = useIndex();
+    const { sendResult, plusScore } = useResult();
 
-    const plusScore = useResult();
-
-    
-//onClick={()=>createResult(script.choices[choice])}
     return (
-        <PagesStyle onClick={handleClick} $image={backgroundImg}>
-            {script.type === TYPEENUM.NARR && <Conversation name={script.name} text={script.text} />}
-            {(choice === null) && script.type === TYPEENUM.CHOICE && 
+        <PagesStyle onClick={handleClick(sendResult)} $image={backgroundImg}>
+            {script?.type === TYPEENUM.NARR && <Conversation name={script.name} text={script.text} />}
+            {(choice === null) && script?.type === TYPEENUM.CHOICE && 
                 <Choice choice={setChoiceIndex} text={script.choices} plusScore={plusScore}/>}
-            {(choice !== null) && script.type === TYPEENUM.CHOICE && 
+            {(choice !== null) && script?.type === TYPEENUM.CHOICE && 
                 <Conversation name={script.choices[choice].speaker}
                 text={script.choices[choice].answer} />}
         </PagesStyle>
     );
-}
-
-function MainPage(){
-    
-    return(
-        <FlexContainer>
-            <Page />
-        </FlexContainer>
-    )
 }
 
 export default MainPage;
