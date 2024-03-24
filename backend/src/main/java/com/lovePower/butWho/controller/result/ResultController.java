@@ -26,7 +26,7 @@ public class ResultController {
     }
 
     //캐릭터별 결과 저장
-    @PostMapping("/result/{character}")
+    @PostMapping("/api/result/{character}")
     public ResultSaveResponse saveResult(Authentication authentication,
                                          @RequestBody ResultSaveRequest request, @PathVariable Integer character)
     {
@@ -36,7 +36,7 @@ public class ResultController {
     }
 
     //해당 유저의 모든 공략 후 최종 결과 반환
-    @GetMapping("/result/final")
+    @GetMapping("/api/result/final")
     public List<FinalResponse> allResults(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = ((User)userDetails).getEmail();
@@ -44,7 +44,7 @@ public class ResultController {
     }
 
     //해당 유저의 공략여부
-    @GetMapping("/play")
+    @GetMapping("/api/play")
     public List<PlayResponse> isPlayed(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = ((User)userDetails).getEmail();
@@ -52,7 +52,7 @@ public class ResultController {
     }
 
     //새로 플레이하고 싶은 경우 공략 결과 초기화하기
-    @PostMapping("/clear")
+    @PostMapping("/api/clear")
     public void clearResult(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = ((User)userDetails).getEmail();
@@ -60,7 +60,7 @@ public class ResultController {
     }
 
     //유저 정보 결과
-    @GetMapping("/myInfo")
+    @GetMapping("/api/myInfo")
     public UserInfoResponse getUserInfo(Authentication authentication){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = ((User)userDetails).getEmail();
@@ -68,7 +68,7 @@ public class ResultController {
     }
 
     //테스트용
-    @GetMapping("/result")
+    @GetMapping("/api/result")
     public ResponseEntity<?> helloUser() {
         return  ResponseEntity.ok().build();
     }
