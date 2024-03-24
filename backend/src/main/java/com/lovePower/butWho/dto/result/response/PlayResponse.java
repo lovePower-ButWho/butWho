@@ -8,4 +8,5 @@ import lombok.Getter;
 public class PlayResponse {
     private Integer id;
     private Boolean isPlayed;
+    private Integer lovePower;
 }

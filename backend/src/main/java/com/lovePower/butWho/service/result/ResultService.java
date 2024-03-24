@@ -15,10 +15,7 @@ import jakarta.validation.constraints.Null;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.lovePower.butWho.error.ErrorCode.NOT_COMPLETED;
@@ -74,7 +71,15 @@ public class ResultService {
         User user = userRepository.findById(email).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
         List<PlayResponse> isplayed = new ArrayList<>();
         for(Integer id:targetIds){
-            isplayed.add(new PlayResponse(id,resultRepository.existsByUserAndTargetId(user,id)));
+            Result result = resultRepository.findByUserAndTargetId(user,id).orElse(null);
+            Integer lovePower;
+            if (result != null){
+                lovePower = result.getLovePower();
+            }
+            else {
+                lovePower = null;
+            }
+            isplayed.add(new PlayResponse(id,resultRepository.existsByUserAndTargetId(user,id),lovePower));
         }
         return isplayed;
     }
