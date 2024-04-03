@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const InputWrapper = styled.div`
+export const InputWrapper = styled.form`
   margin: 220px 28px;
 `;
 export const InputItem = styled.div`
   width: 300px;
   height: 60px;
 
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 export const InputLabel = styled.span`
