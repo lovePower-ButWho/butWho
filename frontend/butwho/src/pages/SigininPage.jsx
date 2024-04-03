@@ -38,6 +38,10 @@ const SigninPage = () => {
     navigate("/signup");
   };
 
+  const gotoSelection = () => {
+    navigate("/select");
+  };
+
   return (
     <>
       <PagesStyle $image={backGround}>
@@ -51,7 +55,7 @@ const SigninPage = () => {
             <InputElement type="password" />
           </InputItem>
           <InputItem>
-            <Button>로그인</Button>
+            <Button onClick={gotoSelection}>로그인</Button>
           </InputItem>
           <TextItem>
             <GuideText>아직 계정이 없으신가요?</GuideText>
