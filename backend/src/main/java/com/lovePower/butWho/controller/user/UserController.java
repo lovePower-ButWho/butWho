@@ -38,9 +38,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto userDto) throws Exception {
+    public ResponseEntity<?> register(@RequestBody UserDto userDto) throws BadCredentialsException {
         if(userRepository.existsByEmail(userDto.getEmail())) {
-            throw new Exception("이미 존재하는 사용자 정보입니다.");
+            throw new BadCredentialsException("이미 존재하는 사용자 정보입니다.");
         }
 
         userService.createUser(userDto);
@@ -50,7 +50,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("옳지 않은 이메일 혹은 비밀번호입니다.", e);
+            throw new BadCredentialsException("옳지 않은 이메일 혹은 비밀번호입니다.", e);
         }
 
         final UserDetails userDetails = userDetailsService

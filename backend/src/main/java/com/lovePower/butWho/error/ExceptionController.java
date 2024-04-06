@@ -3,6 +3,7 @@ package com.lovePower.butWho.error;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -29,5 +30,13 @@ public class ExceptionController {
         return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler()
+    @ExceptionHandler(BadCredentialsException.class)
+    public static ResponseEntity<ErrorResponseEntity> badCredentialException(BadCredentialsException e){
+        log.info(e.getMessage());
+        ErrorResponseEntity errorResponseEntity = ErrorResponseEntity.builder()
+                .error("BadCredentialsException")
+                .msg(e.getMessage())
+                .build();
+        return new ResponseEntity<>(errorResponseEntity, HttpStatus.BAD_REQUEST);
+    }
 }
