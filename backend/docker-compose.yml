@@ -1,0 +1,21 @@
+version: '3'
+services:
+  database:
+    image: 'mariadb:latest'
+    ports:
+      - '3308'
+    environment:
+      - 'POSTGRES_USER=root'
+      - 'POSTGRES_DB=butWho'
+      - 'POSTGRES_PASSWORD=butwho01'
+
+  spring-app:
+    image: "butwho:latest"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:mariadb://localhost:3308/butWho'
+      SPRING_DATASOURCE_USERNAME: 'root'
+      SPRING_DATASOURCE_PASSWORD: 'mariapw01'
