@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,7 +20,8 @@ import org.springframework.util.StringUtils;
 @Component
 public class JwtUtil {
 
-    private String SECRET_KEY = "44407b6f5caf26cf5cc82272d3719441ac716b2510f3bae495f7fffb73dfa608b8ad3ffc53f2a5c3f94421dac6cd2a8b2effe88988c837ea8b432a97a4de20ea";
+    @Value("${jwt-config.secret}")
+    private String SECRET_KEY;
 
     byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
     SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
