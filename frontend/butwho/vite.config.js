@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/api": "http://www.but-who.shop:8080",
+      "/api": {
+        target: "http://www.but-who.shop:8080",
+      },
     },
   },
 });

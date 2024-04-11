@@ -8,16 +8,13 @@ import {
 } from "../Styles/InputStyle";
 import { Button } from "../Styles/ButtonStyle";
 import { useNavigate } from "react-router-dom";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
+import { LoginContext } from "../contexts/LoginContext";
 import axios from "axios";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-
-  const finishSignup = () => {
-    alert("회원가입이 완료되었습니다. 로그인해 주세요.");
-    navigate("/signin");
-  };
+  const { setAccessToken } = useContext(LoginContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -93,25 +90,23 @@ const SignupPage = () => {
     [password]
   );
 
-  const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      try {
-        await axios
-          .post("/user/register", {
-            email: email,
-            password: password,
-            name: name,
-          })
-          .then((res) => {
-            console.log("response:", res);
-          });
-      } catch (err) {
-        console.error(err);
-      }
-    },
-    [email, name, password]
-  );
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/user/register", {
+        email: email,
+        password: password,
+        name: name,
+      });
+      console.log(response);
+      const jwtToken = response.data.jwt;
+      localStorage.setItem("access_token", jwtToken);
+      setAccessToken(jwtToken);
+      navigate("/select");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <>
@@ -188,7 +183,7 @@ const SignupPage = () => {
             </span>
           </InputItem>
           <InputItem>
-            <Button onClick={finishSignup}>회원가입</Button>
+            <Button type="submit">회원가입</Button>
           </InputItem>
         </InputWrapper>
       </PagesStyle>

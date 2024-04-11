@@ -19,7 +19,7 @@ export const InputElement = styled.input`
   width: 300px;
   height: 45px;
 
-  display: inlie-flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 

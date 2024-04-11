@@ -1,58 +1,57 @@
-import { useState, useContext } from 'react';
-import axios from 'axios';
-import { PageContext } from '../contexts/PageContext';
-import { getBoyEnumId } from '../enum';
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { LoginContext } from "../contexts/LoginContext";
+import { getBoyEnumId } from "../enum";
 
-const useResult = () => {
-    const [result, setResult] = useState({
-        'E': 0,
-        'I': 0,
-        'S': 0,
-        'N': 0,
-        'T': 0,
-        'F': 0,
-        'J': 0,
-        'P': 0,
-    });
+const useResult = (type) => {
+  const { accessToken } = useContext(LoginContext);
+  const [result, setResult] = useState({
+    E: 0,
+    I: 0,
+    S: 0,
+    N: 0,
+    T: 0,
+    F: 0,
+    J: 0,
+    P: 0,
+  });
 
-    const [lovePower, setLovePower] = useState(0);
+  const [lovePower, setLovePower] = useState(0);
+  const [myResult, setMyResult] = useState({});
 
-    const plusScore = (mbti, isLove) => {
-        const newResult = {...result};
-        newResult[mbti]++;
-        setResult(newResult);
-        if(isLove === true) { 
-            setLovePower(lovePower+10); 
-        };
-    };
-
-    // useEffect(() => {
-    //     console.log(result)
-    //     console.log(lovePower)
-    // }, [result, lovePower]);
-
-    const send = {...result, lovePower};
-    const {type} = useContext(PageContext);
-   
-
-    const sendResult = async() => {
-
-        axios.post('/result/' + getBoyEnumId(type), 
-        send, 
-        { 
-            headers: {
-                Authorization : 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdXRob3JpdHkiOjEsInN1YiI6ImFhYWFAbmF2ZXIuY29tIiwiaWF0IjoxNzExMjExOTUyLCJleHAiOjE3MjI0NDc5NTJ9.a7Vi_XQy6YYdfb25iV72NHF_tVmXUAzPFyZRslPNaos' 
-            }
-        }
-
-        ).then(function (response) {
-            console.log(response);
-        }).catch(function (error){
-            console.log(error);
-        });
+  const plusScore = (mbti, isLove) => {
+    const newResult = { ...result };
+    newResult[mbti]++;
+    setResult(newResult);
+    if (isLove === true) {
+      setLovePower(lovePower + 10);
     }
+  };
 
-    return { sendResult, plusScore };
-}
+  useEffect(() => console.log(lovePower), [lovePower]);
+
+  const sendResult = async () => {
+    const sendData = { ...result, lovePower };
+    console.log(accessToken);
+    try {
+      const response = await axios.post(
+        "/api/result/" + getBoyEnumId(type),
+        sendData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setMyResult(response.data);
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const resetLovePower = () => setLovePower(0);
+  return { plusScore, myResult, lovePower, resetLovePower, sendResult };
+};
 
 export default useResult;

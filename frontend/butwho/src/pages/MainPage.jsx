@@ -14,12 +14,17 @@ export const PagesStyle = styled.div`
 `;
 
 const MainPage = () => {
-  const { script, backgroundImg, choice, setChoiceIndex, handleClick } =
-    useIndex();
-  const { sendResult, plusScore } = useResult();
+  const {
+    script,
+    plusScore,
+    backgroundImg,
+    choice,
+    setChoiceIndex,
+    handleClick,
+  } = useIndex();
 
   return (
-    <PagesStyle onClick={handleClick(sendResult)} $image={backgroundImg}>
+    <PagesStyle onClick={handleClick()} $image={backgroundImg}>
       {script?.type === TYPEENUM.NARR && (
         <Conversation name={script.name} text={script.text} />
       )}
