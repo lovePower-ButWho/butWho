@@ -3,6 +3,7 @@ package com.lovePower.butWho.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
@@ -20,12 +21,15 @@ import org.springframework.util.StringUtils;
 @Component
 public class JwtUtil {
 
-    @Value("${jwt-config.secret}")
+    @Value("${jwt.secret}")
     private String SECRET_KEY;
 
-    byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
-    SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
-
+    private SecretKey originalKey;
+    @PostConstruct
+    public void init(){
+        byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
+        originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "HmacSHA256");
+    }
     public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
