@@ -9,7 +9,7 @@ import com.lovePower.butWho.util.JwtUtil;
 import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.request.user.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,22 +20,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-    @Autowired
-    private UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService userDetailsService;
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserRepository userRepository;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) throws BadCredentialsException {
