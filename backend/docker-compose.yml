@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: db
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: always
+
+    networks:
+      - butWho_net
+
+  butWho-backend:
+    container_name: ${DOCKER_IMAGE}
+    image: ${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE}
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://maria:3308/${DATABASE_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_NAME}
+      SPRING_DATASOURCE_PASSWORD: ${ROOT_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET_KEY}
+      JWT_HEADER_PREFIX: ${JWT_HEADER_PREFIX}
+      PROFILE: dev

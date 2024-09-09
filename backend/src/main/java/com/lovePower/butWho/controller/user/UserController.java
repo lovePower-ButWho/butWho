@@ -9,7 +9,7 @@ import com.lovePower.butWho.util.JwtUtil;
 import com.lovePower.butWho.domain.user.UserRepository;
 import com.lovePower.butWho.dto.request.user.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,27 +20,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-    @Autowired
-    private UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
+    private final CustomUserDetailsService userDetailsService;
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto userDto) throws Exception {
+    public ResponseEntity<?> register(@RequestBody UserDto userDto) throws BadCredentialsException {
         if(userRepository.existsByEmail(userDto.getEmail())) {
-            throw new Exception("이미 존재하는 사용자 정보입니다.");
+            throw new BadCredentialsException("이미 존재하는 사용자 정보입니다.");
         }
 
         userService.createUser(userDto);
@@ -50,7 +42,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword())
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("옳지 않은 이메일 혹은 비밀번호입니다.", e);
+            throw new BadCredentialsException("옳지 않은 이메일 혹은 비밀번호입니다.", e);
         }
 
         final UserDetails userDetails = userDetailsService
